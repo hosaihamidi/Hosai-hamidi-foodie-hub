@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foodie Hub</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* === Base === */
+      body {
+        scroll-behavior: smooth;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      /* === Navbar === */
+      .navbar-nav .nav-link.active {
+        font-weight: bold;
+        color: #f39c12 !important;
+      }
+
+      /* === Hero Section === */
+      .hero-section {
+        position: relative;
+        height: 90vh;
+        background: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80")
+          no-repeat center center / cover;
+        overflow: hidden;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom right,
+          rgba(0, 0, 0, 0.6),
+          rgba(0, 0, 0, 0.4)
+        );
+        z-index: 1;
+      }
+
+      .hero-section .container {
+        z-index: 2;
+      }
+
+      .text-accent {
+        color: #f39c12;
+      }
+
+      .btn-accent {
+        background-color: #f39c12;
+        border: none;
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-accent:hover {
+        background-color: #e67e22;
+        transform: scale(1.05);
+      }
+
+      .animate-text {
+        animation: fadeInUp 1s ease-out forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-section h1 {
+          font-size: 2rem;
+        }
+        .hero-section p {
+          font-size: 1.1rem;
+        }
+      }
+
+      /* === Restaurant Cards === */
+      .restaurant-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .restaurant-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .restaurant-card img {
+        height: 180px;
+        object-fit: cover;
+      }
+
+      /* === Menu Items === */
+      .menu-restaurant .badge {
+        font-size: 0.9rem;
+        padding: 0.4em 0.8em;
+        border-radius: 0.5rem;
+      }
+
+      /* === Order Form === */
+      .order-form .quantity-input {
+        width: 60px;
+        min-width: 50px;
+      }
+
+      @media (max-width: 767.98px) {
+        .order-form .form-check {
+          flex-wrap: wrap;
+        }
+        .order-form .quantity-input {
+          margin-top: 0.25rem;
+          width: 100%;
+          min-width: auto;
+        }
+      }
+
+      /* === About === */
+      #about p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 767.98px) {
+        #about {
+          text-align: center;
+        }
+        #about p {
+          font-size: 1rem;
+        }
+      }
+
+      /* === Footer === */
+      footer a:hover {
+        color: #f39c12 !important;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- === Navbar === -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Foodie Hub</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#restaurants">Restaurants</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- === Hero === -->
+    <section
+      id="home"
+      class="hero-section d-flex align-items-center justify-content-center text-white"
+    >
+      <div class="hero-overlay"></div>
+      <div class="container text-center position-relative z-2">
+        <h1 class="display-3 fw-bold mb-3 animate-text">
+          Welcome to <span class="text-accent">Foodie Hub</span>
+        </h1>
+        <p class="lead fs-4 mb-4">
+          Order your favorite meals from top restaurants — fast, fresh, and
+          easy!
+        </p>
+        <a href="#restaurants" class="btn btn-lg btn-accent px-4 py-2"
+          >Browse Restaurants</a
+        >
+      </div>
+    </section>
+
+    <!-- === Restaurants === -->
+    <section id="restaurants" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">Our Restaurants</h2>
+        <div class="row g-4">
+          <!-- Repeat this block for 6 restaurants -->
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card restaurant-card h-100">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI32ugT98y0iEsMR8ZsZwhcAwvgYQTgE51TA&s"
+                class="card-img-top"
+                alt="Pizza Palace"
+              />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Pizza Palace</h5>
+                <p class="card-text flex-grow-1">
+                  Authentic Italian pizza with fresh ingredients.
+                </p>
+                <a href="#menu-pizza" class="btn btn-primary mt-auto"
+                  >View Menu</a
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Sushi World -->
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card restaurant-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80"
+                class="card-img-top"
+                alt="Sushi World"
+              />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Sushi World</h5>
+                <p class="card-text flex-grow-1">
+                  Fresh sushi, sashimi, and rolls prepared daily.
+                </p>
+                <a href="#menu-sushi" class="btn btn-primary mt-auto"
+                  >View Menu</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Burger Barn -->
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card restaurant-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"
+                class="card-img-top"
+                alt="Burger Barn"
+              />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Burger Barn</h5>
+                <p class="card-text flex-grow-1">
+                  Classic and gourmet burgers made fresh.
+                </p>
+                <a href="#menu-burger" class="btn btn-primary mt-auto"
+                  >View Menu</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Vegan Delights -->
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card restaurant-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=600&q=80"
+                class="card-img-top"
+                alt="Vegan Delights"
+              />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Vegan Delights</h5>
+                <p class="card-text flex-grow-1">
+                  Plant-based meals packed with flavor and health.
+                </p>
+                <a href="#menu-vegan" class="btn btn-primary mt-auto"
+                  >View Menu</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Taco Fiesta -->
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card restaurant-card h-100">
+              <img
+                src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=600&q=80"
+                class="card-img-top"
+                alt="Taco Fiesta"
+              />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Taco Fiesta</h5>
+                <p class="card-text flex-grow-1">
+                  Tacos, burritos, and nachos with bold flavors.
+                </p>
+                <a href="#menu-taco" class="btn btn-primary mt-auto"
+                  >View Menu</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Pasta House -->
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card restaurant-card h-100">
+              <img
+                src="https://www.halfbakedharvest.com/wp-content/uploads/2022/03/Lemon-Pepper-Cajun-Chicken-Alfredo-1.jpg"
+                class="card-img-top"
+                alt="Pasta House"
+              />
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Pasta House</h5>
+                <p class="card-text flex-grow-1">
+                  Homemade pasta and Italian specialties.
+                </p>
+                <a href="#menu-pasta" class="btn btn-primary mt-auto"
+                  >View Menu</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === Menus === -->
+    <section id="menus" class="py-5">
+      <div class="container">
+        <!-- Pizza Palace -->
+        <div id="menu-pizza" class="menu-restaurant mb-5">
+          <h3 class="mb-4 fw-bold">Pizza Palace Menu</h3>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Margherita Pizza</h5>
+                  <p class="card-text">Tomato, mozzarella, fresh basil.</p>
+                  <p class="fw-bold">$11.99</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Pepperoni Pizza</h5>
+                  <p class="card-text">Mozzarella, pepperoni, house sauce.</p>
+                  <p class="fw-bold">$13.49</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Four Cheese Pizza</h5>
+                  <p class="card-text">
+                    Mozzarella, cheddar, parmesan, gorgonzola.
+                  </p>
+                  <p class="fw-bold">$14.25</p>
+                  <span class="badge bg-danger">Unavailable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sushi World -->
+        <div id="menu-sushi" class="menu-restaurant mb-5">
+          <h3 class="mb-4 fw-bold">Sushi World Menu</h3>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">California Roll</h5>
+                  <p class="card-text">Crab, avocado, cucumber, sesame.</p>
+                  <p class="fw-bold">$9.50</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Salmon Nigiri</h5>
+                  <p class="card-text">Fresh salmon over vinegared rice.</p>
+                  <p class="fw-bold">$12.00</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Tuna Sashimi</h5>
+                  <p class="card-text">Sliced raw tuna served chilled.</p>
+                  <p class="fw-bold">$14.75</p>
+                  <span class="badge bg-danger">Unavailable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Burger Barn -->
+        <div id="menu-burger" class="menu-restaurant mb-5">
+          <h3 class="mb-4 fw-bold">Burger Barn Menu</h3>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Classic Cheeseburger</h5>
+                  <p class="card-text">
+                    Beef patty, cheddar, lettuce, tomato, bun.
+                  </p>
+                  <p class="fw-bold">$10.99</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">BBQ Bacon Burger</h5>
+                  <p class="card-text">
+                    Smoky BBQ, bacon, cheddar, onion rings.
+                  </p>
+                  <p class="fw-bold">$13.75</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Veggie Burger</h5>
+                  <p class="card-text">
+                    Plant-based patty, avocado, greens, aioli.
+                  </p>
+                  <p class="fw-bold">$11.50</p>
+                  <span class="badge bg-danger">Unavailable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vegan Delights -->
+        <div id="menu-vegan" class="menu-restaurant mb-5">
+          <h3 class="mb-4 fw-bold">Vegan Delights Menu</h3>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Tofu Buddha Bowl</h5>
+                  <p class="card-text">Tofu, quinoa, kale, tahini dressing.</p>
+                  <p class="fw-bold">$12.00</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Chickpea Curry</h5>
+                  <p class="card-text">Spiced chickpeas with rice and naan.</p>
+                  <p class="fw-bold">$11.00</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Zucchini Noodles</h5>
+                  <p class="card-text">
+                    Zoodles with marinara and vegan parmesan.
+                  </p>
+                  <p class="fw-bold">$10.50</p>
+                  <span class="badge bg-danger">Unavailable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Taco Fiesta -->
+        <div id="menu-taco" class="menu-restaurant mb-5">
+          <h3 class="mb-4 fw-bold">Taco Fiesta Menu</h3>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Beef Tacos</h5>
+                  <p class="card-text">Soft tortillas, beef, cheese, salsa.</p>
+                  <p class="fw-bold">$9.00</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Chicken Quesadilla</h5>
+                  <p class="card-text">
+                    Grilled chicken, peppers, melted cheese.
+                  </p>
+                  <p class="fw-bold">$10.25</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Loaded Nachos</h5>
+                  <p class="card-text">Cheese, beans, jalapeños, sour cream.</p>
+                  <p class="fw-bold">$8.50</p>
+                  <span class="badge bg-danger">Unavailable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pasta House -->
+        <div id="menu-pasta" class="menu-restaurant mb-5">
+          <h3 class="mb-4 fw-bold">Pasta House Menu</h3>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Spaghetti Carbonara</h5>
+                  <p class="card-text">Creamy egg sauce, pancetta, parmesan.</p>
+                  <p class="fw-bold">$13.95</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Fettuccine Alfredo</h5>
+                  <p class="card-text">Rich Alfredo sauce with fettuccine.</p>
+                  <p class="fw-bold">$12.75</p>
+                  <span class="badge bg-success">Available</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Penne Arrabiata</h5>
+                  <p class="card-text">Spicy tomato garlic sauce.</p>
+                  <p class="fw-bold">$11.00</p>
+                  <span class="badge bg-danger">Unavailable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === Order Form === -->
+    <section id="order" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="mb-4 text-center fw-bold">Place Your Order</h2>
+        <form action="#" class="order-form">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label for="customerName" class="form-label">Customer Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="customerName"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phoneNumber"
+                required
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="restaurantSelect" class="form-label"
+                >Select Restaurant</label
+              >
+              <select class="form-select" id="restaurantSelect" required>
+                <option disabled selected>Select a restaurant</option>
+                <option>Pizza Palace</option>
+                <option>Sushi World</option>
+                <!-- Add more -->
+              </select>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label">Menu Items</label>
+              <div class="form-check d-flex align-items-center mb-2">
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  id="item1"
+                />
+                <label class="form-check-label me-auto" for="item1"
+                  >Margherita Pizza</label
+                >
+                <input
+                  type="number"
+                  class="form-control quantity-input"
+                  min="1"
+                  max="10"
+                  value="1"
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-success px-5">
+              Submit Order
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- === About === -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6 mb-4 mb-md-0">
+            <img
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=80"
+              class="img-fluid rounded shadow"
+              alt="About"
+            />
+          </div>
+          <div class="col-md-6">
+            <h2 class="fw-bold mb-3">About Foodie Hub</h2>
+            <p>
+              Foodie Hub is your go-to platform for ordering delicious meals
+              from your favorite local restaurants.
+            </p>
+            <p>
+              We prioritize fresh ingredients, fast delivery, and a seamless
+              user experience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === Footer === -->
+    <footer id="contact" class="bg-dark text-light py-4">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <p class="mb-1"><strong>Email:</strong> hosaifarahi8@gmail.com</p>
+            <p class="mb-1"><strong>Phone:</strong> 0703337803</p>
+            <p class="mb-0">
+              <strong>Address:</strong> 123 Foodie St, Kabul, Afghanistan
+            </p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <a href="#" class="text-light fs-4 me-3"
+              ><i class="bi bi-facebook"></i
+            ></a>
+            <a href="#" class="text-light fs-4 me-3"
+              ><i class="bi bi-twitter"></i
+            ></a>
+            <a href="#" class="text-light fs-4 me-3"
+              ><i class="bi bi-instagram"></i
+            ></a>
+            <a href="#" class="text-light fs-4"
+              ><i class="bi bi-linkedin"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
